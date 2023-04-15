@@ -1,23 +1,20 @@
-import logo from './logo.svg';
+import { Link } from 'react-router-dom';
+import pawprint from './assets/images/pawprint.png'
 import './App.css';
+import Container from './Container';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <div className="header">
+          <Link to="/barkspace">
+            <img src={pawprint} className="App-logo" alt="logo" />
+          </Link>
+          <h2>
+            BarkSpace
+          </h2>
+      </div>
+      <Container />
     </div>
   );
 }

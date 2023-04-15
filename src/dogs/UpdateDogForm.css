@@ -1,0 +1,10 @@
+.open-edit {
+    background-color:steelblue;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: bold;
+    border-radius: 4px;
+}
+
+.update-input {
+    display: block;
+}
