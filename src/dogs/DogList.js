@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import NewDogForm from './NewDogForm';
 import Dog from './Dog';
 import './DogList.css'
-import { removeDog, searchDog } from './actions';
+import pawbadge from '../assets/pawbadge.png';
+import { removeDog, filterDogs, sortDogs } from './actions';
 import UpdateDogForm from './UpdateDogForm';
+import RemoveDogModal from './RemoveDogModal';
 
 const SearchAddBar = ({children}) => {
     const [showModal, setShowModal] = useState(false);
@@ -24,52 +26,38 @@ const SearchAddBar = ({children}) => {
     )
 };
 
-const DogList = ({ dogs, onRemovePressed, onSearchPressed }) => {
+const DogList = ({ onRemovePressed, onSearchPressed, onSortPressed, onFilterBySize }) => {
 
     const [query, setQuery] = useState("");
+    const [missingDog, setMissingDog] = useState("")
     const [sizeFilter, setSizeFilter] = useState("");
-    const [filteredDogs, setFilteredDogs] = useState(dogs);
-    const [sortOrder, setSortOrder] = useState("ascending");
-
-  const handleSearch = (e) => {
-    e.preventDefault();
-    const updatedFilteredDogs = dogs.filter((dog) =>
-      dog.name.toLowerCase().includes(query.toLowerCase())
+    const [isFiltered, setIsFiltered] = useState(false);
+    const { dogs, filteredDogs, sortOrder } = useSelector(
+        (state) => state.data
     );
-    if (sizeFilter) {
-        setFilteredDogs(
-            updatedFilteredDogs.filter(dog => dog.size === sizeFilter)
-        );
-    } else {
-        setFilteredDogs(updatedFilteredDogs);
-    }
-    onSearchPressed(query);
+
+  const handleSearch = e => {
+    e.preventDefault();
+    onSearchPressed(query, sizeFilter);
+    setQuery("");
   };
 
   const handleSortByName = () => {
-    const sortedDogs = [...filteredDogs].sort((a, b) =>
-        sortOrder === "ascending"
-            ? a.name.localeCompare(b.name)
-            : b.name.localeCompare(a.name)
-    );
-    setFilteredDogs(sortedDogs);
-    setSortOrder(sortOrder === "ascending" ? "descending" : "ascending")
+    onSortPressed(sortOrder === "ascending" ? "descending" : "ascending");
   };
 
-  const handleFilterBySize = (e) => {
-    const selectedSize = e.target.value;
-    setSizeFilter(selectedSize);
-    const updatedFilteredDogs = dogs.filter(dog =>
-        dog.name.toLowerCase().includes(query.toLowerCase())
-    );
-    if (selectedSize) {
-        setFilteredDogs(
-            updatedFilteredDogs.filter(dog => dog.size === selectedSize)
-        );
-    } else {
-        setFilteredDogs(updatedFilteredDogs);
-    }
+  const handleFilterBySize = e => {
+    setSizeFilter(e.target.value);
+    onFilterBySize(query, e.target.value);
+    setIsFiltered(true)
   };
+
+  const handleSearchInput = e => {
+    setQuery(e.target.value)
+    setMissingDog(e.target.value)
+  };
+
+  const useDogs = !filteredDogs ?  dogs : filteredDogs
 
     return (
         <div>
@@ -83,46 +71,55 @@ const DogList = ({ dogs, onRemovePressed, onSearchPressed }) => {
                             type='text' 
                             value={query} 
                             placeholder="Search for a dog's name"
-                            onChange={e => setQuery(e.target.value)} />
+                            onChange={e => handleSearchInput(e)} />
                         <button className="submit-button" type='submit'>Submit</button>
                     </form>
                 </div>
                 </SearchAddBar>
             </div>
-            <div className='filter-sort-wrapper'>
-                <button onClick={handleSortByName} className='sort-button'>
-                    Sort dogs by name {sortOrder === "ascending" ? "↑" : "↓"}
-                </button>
-                <div className='filter-container'>
-                    <label htmlFor='sizeFilter'>Filter by size: </label>
-                    <select id="sizeFilter" onChange={handleFilterBySize}>
-                        <option value="">All</option>
-                        <option value="XS">XS</option>
-                        <option value="SM">SM</option>
-                        <option value="MD">MD</option>
-                        <option value="LG">LG</option>
-                        <option value="XL">XL</option>
-                    </select>
-                </div>
-            </div>
-            <div className='dog-list-wrapper'>
-                {filteredDogs.map((dog, index) => (
-                <div className="card" key={dog.index}>
-                    <Link to={`/barkspace/${dog.name}`} key={dog.index}>
-                        <Dog dog={dog} onRemovePressed={onRemovePressed} />
-                    </Link>
-                    <div className="buttons-container" key={dog.index}>
-                        <UpdateDogForm dog={dog} index={index} key={dog.index}/>
-                        <button 
-                            onClick={() => onRemovePressed(dog)}
-                            className="delete-button"
-                            key={dog.index}
-                        >
-                            X Remove Dog
-                        </button>
+                <div className='filter-sort-wrapper'>
+                    <button onClick={handleSortByName} className='sort-button'>
+                        Sort dogs by name {sortOrder === "ascending" ? "↑" : "↓"}
+                    </button>
+                    <div className='filter-container'>
+                        <label htmlFor='sizeFilter'>Filter by size: </label>
+                        <select id="sizeFilter" onChange={handleFilterBySize}>
+                            <option value="">All</option>
+                            <option value="XS">XS</option>
+                            <option value="SM">SM</option>
+                            <option value="MD">MD</option>
+                            <option value="LG">LG</option>
+                            <option value="XL">XL</option>
+                        </select>
                     </div>
                 </div>
+            <div className='dog-list-wrapper'>
+                {useDogs.map((dog, index) => (
+                <div className="card" key={dog.name}>
+                    <Link to={`/barkspace/${dog.name}`}>
+                        <img src={pawbadge} className="badge" alt="logo" />
+                        <Dog dog={dog} onRemovePressed={onRemovePressed} />
+                    </Link>
+                    <div className='buttons-container'>
+                         <div className="left-buttons-container" key={dog.name}>
+                        <Link to={`/barkspace/${dog.name}`}>
+                            <button 
+                                className="meet-button"                          
+                            >
+                                Meet {dog.name}
+                            </button>                   
+                        </Link>
+                        <UpdateDogForm dog={dog} index={index} />
+                    </div>
+                    <RemoveDogModal dog={dog} />
+                   </div>
+                </div>
                 ))}
+                <h3 className='missing-dog-prompt'>{useDogs.length === 0 && sizeFilter === ""  ? 
+                `There are no dogs named ${missingDog.charAt(0).toUpperCase().concat(missingDog.slice(1))} around here` 
+                : useDogs.length === 0
+                ? `There are no ${sizeFilter} dogs around here`
+                : null}</h3>
             </div>
         </div>
 );}
@@ -135,7 +132,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => ({
     onRemovePressed: dog => dispatch(removeDog(dog)),
-    onSearchPressed: query => dispatch(searchDog(query))
+    onSearchPressed: (query, sizeFilter) => dispatch(filterDogs(query, sizeFilter)),
+    onSortPressed: newSortOrder => dispatch(sortDogs(newSortOrder)),
+    onFilterBySize: (query, sizeFilter) => dispatch(filterDogs(query, sizeFilter)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DogList);

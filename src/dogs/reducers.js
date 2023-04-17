@@ -1,4 +1,4 @@
-import { CREATE_DOG, UPDATE_DOG, REMOVE_DOG, SEARCH_DOG } from "./actions";
+import { CREATE_DOG, UPDATE_DOG, REMOVE_DOG, SORT_DOGS, FILTER_DOGS } from "./actions";
 
 const initialState = {
     dogs: [
@@ -73,8 +73,8 @@ const initialState = {
             description: "The resident toy and bone hoarder"
         },
     ],
-    searchResults: [],
-}
+    sortOrder: '',
+};
 
 export const data = (state = initialState, action) => {
     const { type, payload } = action;
@@ -82,36 +82,71 @@ export const data = (state = initialState, action) => {
     switch (type) {
     case CREATE_DOG: {
         const { dog } = payload;
+        const newDogs = state.dogs.concat(dog)
         return {
             ...state,
-            dogs: state.dogs.concat(dog)
+            dogs: newDogs,
+            filteredDogs: newDogs
         };
     }
     case UPDATE_DOG: {
-        const { index, updatedDog } = payload;
+        const { updatedDog } = payload;
+        const dogIndex = state.dogs.findIndex(dog => dog.name === updatedDog.name)
+        const filteredDogIndex = state.filteredDogs.findIndex(dog => dog.name === updatedDog.name)
         const newDogs = [
-            ...state.dogs.slice(0, index),
+            ...state.dogs.slice(0, dogIndex),
             updatedDog,
-            ...state.dogs.slice(index + 1)
-        ]
+            ...state.dogs.slice(dogIndex + 1)
+        ];
+        const newFilteredDogs = [
+            ...state.filteredDogs.slice(0, filteredDogIndex),
+            updatedDog,
+            ...state.filteredDogs.slice(filteredDogIndex + 1)
+        ];
         return {
             ...state,
-            dogs: newDogs
+            dogs: newDogs,
+            filteredDogs: newFilteredDogs
         }
     }
     case REMOVE_DOG: {
         const { dog } = payload;
+        const newDogs = state.dogs.filter(dogToRemove => dogToRemove !== dog);
         return {
             ...state,
-            dogs: state.dogs.filter(dogToRemove => dogToRemove !== dog)
+            dogs: newDogs,
+            filteredDogs: newDogs,
         };
     }
-    case SEARCH_DOG: {
-        const { query } = payload
-        const searchResults = state.dogs.filter(dog => dog.name.toLowerCase().includes(query.toLowerCase()))
+    case FILTER_DOGS: {
+        const { query, sizeFilter } = payload; 
+        let filteredDogs = state.dogs.filter(dog => {
+          const nameMatch = dog.name.toLowerCase().includes(query.toLowerCase())
+          const sizeMatch = sizeFilter === "" || dog.size === sizeFilter;
+          return nameMatch && sizeMatch; 
+        });
         return {
             ...state,
-            searchResults
+            filteredDogs: filteredDogs,
+        };
+    }
+    case SORT_DOGS: {
+        const { sortOrder } = payload;
+        const sortedDogs = [...state.dogs].sort((a, b) =>
+        sortOrder === "ascending"
+            ? a.name.localeCompare(b.name)
+            : b.name.localeCompare(a.name)
+        );
+        const sortedFilteredDogs = [...state.filteredDogs].sort((a, b) =>
+        sortOrder === "ascending"
+            ? a.name.localeCompare(b.name)
+            : b.name.localeCompare(a.name)
+        );
+        return {
+            ...state,
+            sortOrder,
+            dogs: sortedDogs,
+            filteredDogs: sortedFilteredDogs,
         }
     }
     default:

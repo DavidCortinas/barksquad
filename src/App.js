@@ -1,19 +1,12 @@
-import { Link } from 'react-router-dom';
-import pawprint from './assets/images/pawprint.png'
-import './App.css';
-import Container from './Container';
+import React from "react";
+import Container from "./Container";
+import Header from "./Header";
+import './App.css'
 
 function App() {
   return (
-    <div>
-      <div className="header">
-          <Link to="/barkspace">
-            <img src={pawprint} className="App-logo" alt="logo" />
-          </Link>
-          <h2>
-            BarkSpace
-          </h2>
-      </div>
+    <div className="App">
+      <Header />
       <Container />
     </div>
   );

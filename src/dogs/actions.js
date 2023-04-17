@@ -5,9 +5,9 @@ export const createDog = dog  => ({
 });
 
 export const UPDATE_DOG = "UPDATE_DOG";
-export const updateDog = (index, updatedDog) => ({
+export const updateDog = (updatedDog) => ({
     type: UPDATE_DOG,
-    payload: { index, updatedDog },
+    payload: { updatedDog },
 });
 
 export const REMOVE_DOG = 'REMOVE_DOG';
@@ -16,8 +16,14 @@ export const removeDog = dog => ({
     payload: { dog },
 });
 
-export const SEARCH_DOG = 'SEARCH_DOG';
-export const searchDog = query => ({
-        type: SEARCH_DOG,
-        payload: { query } 
-})
+export const FILTER_DOGS = 'FILTER_DOGS';
+export const filterDogs = (query, sizeFilter) => ({
+    type: FILTER_DOGS,
+    payload: { query, sizeFilter },
+});
+
+export const SORT_DOGS = 'SORT_DOGS';
+export const sortDogs = sortOrder => ({
+    type: SORT_DOGS,
+    payload: { sortOrder },
+});

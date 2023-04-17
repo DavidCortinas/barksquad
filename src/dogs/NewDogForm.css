@@ -1,3 +1,22 @@
 .new-input {
     display: block;
 }
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-close-button {
+    background-color: white;
+    border: none;
+}
+
+.modal-title {
+    margin-top: 0;
+}
+
+.cancel-button {
+    margin-left: 2vmin;
+}

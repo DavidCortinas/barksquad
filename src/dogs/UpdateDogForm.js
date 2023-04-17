@@ -33,14 +33,20 @@ const UpdateDogForm = ({ onUpdatePressed, index, dog }) => {
                 className="open-edit" 
                 onClick={() => setShowModal(true)}
             >
-                Update Dog Properties
+                Update {name}'s' Information
             </button>
             <ReactModal
                 isOpen={showModal}
                 onRequestClose={() => setShowModal(false)}
                 style={modalStyle}
             >
-                <form onSubmit={() => {onUpdatePressed(index, updatedDog)}}>
+                <div className="modal-header">
+                    <h3 className="modal-title">Update {dog.name}'s information</h3>
+                    <button className="modal-close-button" type='button' onClick={() => setShowModal(false)}>
+                        <h3 className="modal-title">X</h3>
+                    </button>
+                </div>
+                <form onSubmit={() => onUpdatePressed(updatedDog)}>
                     <label>Name:</label>
                     <input 
                         type="text" 
@@ -72,7 +78,7 @@ const UpdateDogForm = ({ onUpdatePressed, index, dog }) => {
                         className="update-input"/>
                     <br />
                     <label>Size:</label>
-                    <select className="update-input" onChange={e => setSize(e.target.value)}>
+                    <select className="update-input" onChange={e => setSize(e.target.value)} value={size}>
                         <option value="XS">XS</option>
                         <option value="SM">SM</option>
                         <option value="MD">MD</option>
@@ -93,7 +99,7 @@ const UpdateDogForm = ({ onUpdatePressed, index, dog }) => {
                         className="update-input"></textarea>
                     <br />
                     <button type="submit">Update</button>
-                    <button type='button' onClick={() => setShowModal(false)}>Cancel</button>
+                    <button type='button' className="cancel-button" onClick={() => setShowModal(false)}>Cancel</button>
                 </form>
             </ReactModal>
         </div>
@@ -106,7 +112,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    onUpdatePressed: (index, dog) => dispatch(updateDog(index, dog))
+    onUpdatePressed: (dog) => dispatch(updateDog(dog))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(UpdateDogForm);

@@ -1,0 +1,33 @@
+.header {
+  text-align: center;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  background-color: white;
+  padding: 3vmin 0 1vmin 0;
+  margin-bottom: 2vmin;
+}
+
+.title {
+  margin: 2vmin 0 0;
+}
+
+.logo-title {
+  position: absolute;
+  left: 0; 
+  right: 0; 
+  margin: 0 auto;
+}
+
+.dog-img {
+  margin-top: 5%;
+  padding-top: 2vmin;
+  width: 50%;
+  height: 40%;
+}
+
+.App-logo {
+  height: 10vmin;
+  pointer-events: none;
+  align-items: center;
+}
+

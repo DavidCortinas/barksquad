@@ -1,0 +1,36 @@
+.cancel-delete-button {
+    background-color:tomato;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: bold;
+    border-radius: 4px;
+    margin: 0 2vmin;
+    align-self: center;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-close-button {
+    background-color: white;
+    border: none;
+}
+
+.modal-title {
+    margin-top: 0;
+}
+
+.button-container {
+    display: flex;
+    padding-top: 3vmin;
+}
+
+.confirm-delete-button {
+    background-color:silver;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: bold;
+    border-radius: 4px;
+    align-self: center;
+}
