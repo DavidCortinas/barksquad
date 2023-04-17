@@ -96,13 +96,13 @@ const DogList = ({ onRemovePressed, onSearchPressed, onSortPressed, onFilterBySi
             <div className='dog-list-wrapper'>
                 {useDogs.map((dog, index) => (
                 <div className="card" key={dog.name}>
-                    <Link to={`/barkspace/${dog.name}`}>
+                    <Link to={`/${dog.name}`}>
                         <img src={pawbadge} className="badge" alt="logo" />
                         <Dog dog={dog} onRemovePressed={onRemovePressed} />
                     </Link>
                     <div className='buttons-container'>
                          <div className="left-buttons-container" key={dog.name}>
-                        <Link to={`/barkspace/${dog.name}`}>
+                        <Link to={`/${dog.name}`}>
                             <button 
                                 className="meet-button"                          
                             >

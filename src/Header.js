@@ -12,7 +12,7 @@ const Header = ({ onSearchPressed }) => {
     }
     return (
         <div className="header">
-            <Link to="/barkspace" onClick={handleHomeClick}>
+            <Link to="/" onClick={handleHomeClick}>
                 <div className="logo-title">
                     <img src={pawprint} className="App-logo" alt="logo" />
                     <h2 className="title">

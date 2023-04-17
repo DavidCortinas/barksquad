@@ -7,8 +7,8 @@ const Container = () => {
     
     return (
         <Routes>
-            <Route exact path="/barkspace/:dogName" element={<DogProfile />}/>
-            <Route exact path="/barkspace" element={<DogList />}/>
+            <Route exact path="/:dogName" element={<DogProfile />}/>
+            <Route exact path="/" element={<DogList />}/>
         </Routes>
     )
 }
