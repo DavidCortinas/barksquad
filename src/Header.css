@@ -8,6 +8,7 @@
 }
 
 .title {
+  font-size: 2vw;
   margin: 2vmin 0 0;
 }
 
@@ -29,5 +30,9 @@
   height: 10vmin;
   pointer-events: none;
   align-items: center;
+}
+
+.title-2 {
+  font-size: 1vw;
 }
 

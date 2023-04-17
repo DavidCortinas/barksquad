@@ -18,7 +18,7 @@ const Header = ({ onSearchPressed }) => {
                     <h2 className="title">
                         BarkSquad
                     </h2>
-                    <span className="subheader">Meet Our Team of Pooches</span>
+                    <span className="title-2">Meet Our Team of Pooches</span>
                 </div>
                 <img className="dog-img" src={dogbannerimage} alt="dog-header" />
             </Link>

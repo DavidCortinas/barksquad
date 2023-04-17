@@ -96,7 +96,7 @@ const NewDogForm = ({ onCreatePressed, showModal, setShowModal, onResetSort }) =
                         id="description" 
                         name="description"
                         value={description}
-                        placeholder="Add dog's description"
+                        placeholder="People often describe me as..."
                         onChange={e => setDescription(e.target.value)}
                         className="new-input"
                     />

@@ -64,7 +64,7 @@ a {
     display: grid;
     align-content: center;
     grid-template-columns: auto auto;
-    width: 100%
+    width: 100%;
 }
 
 .delete-button {
