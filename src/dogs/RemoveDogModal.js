@@ -22,7 +22,7 @@ const RemoveDogModal = ({ onRemovePressed, dog }) => {
     return ( 
         <div>
             <button 
-                className="cancel-delete-button" 
+                className="send-home-button" 
                 onClick={() => setShowModal(true)}
             >
                 Send {dog.name} Home For The Day

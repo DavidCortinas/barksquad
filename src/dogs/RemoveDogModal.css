@@ -7,6 +7,16 @@
     align-self: center;
 }
 
+.send-home-button {
+    background-color:tomato;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: bold;
+    border-radius: 4px;
+    margin: 0 2vmin;
+    align-self: center;
+    width: 30vmin;
+}
+
 .modal-header {
     display: flex;
     justify-content: space-between;

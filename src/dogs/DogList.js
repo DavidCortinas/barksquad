@@ -31,7 +31,6 @@ const DogList = ({ onRemovePressed, onSearchPressed, onSortPressed, onFilterBySi
     const [query, setQuery] = useState("");
     const [missingDog, setMissingDog] = useState("")
     const [sizeFilter, setSizeFilter] = useState("");
-    const [isFiltered, setIsFiltered] = useState(false);
     const { dogs, filteredDogs, sortOrder } = useSelector(
         (state) => state.data
     );
@@ -49,7 +48,6 @@ const DogList = ({ onRemovePressed, onSearchPressed, onSortPressed, onFilterBySi
   const handleFilterBySize = e => {
     setSizeFilter(e.target.value);
     onFilterBySize(query, e.target.value);
-    setIsFiltered(true)
   };
 
   const handleSearchInput = e => {
@@ -97,8 +95,10 @@ const DogList = ({ onRemovePressed, onSearchPressed, onSortPressed, onFilterBySi
                 {useDogs.map((dog, index) => (
                 <div className="card" key={dog.name}>
                     <Link to={`/${dog.name}`}>
-                        <img src={pawbadge} className="badge" alt="logo" />
-                        <Dog dog={dog} onRemovePressed={onRemovePressed} />
+                        <div className='dog-badge-container'>
+                            <img src={pawbadge} className="badge" alt="logo" />
+                            <Dog dog={dog} onRemovePressed={onRemovePressed} />
+                        </div>
                     </Link>
                     <div className='buttons-container'>
                          <div className="left-buttons-container" key={dog.name}>

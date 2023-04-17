@@ -4,8 +4,8 @@ a {
 }
 
 .badge {
-  height: 13vmin;
-  padding: 2vmin 0 0 2vmin;
+  height: 15vmin;
+  padding: 2vmin 2vmin 0 5vmin;
 }
 
 .card {
@@ -98,7 +98,6 @@ a {
 }
 
 .filter-sort-wrapper {
-    /* margin: auto 3vmin; */
     display: flex;
     align-content: center;
     padding-left: 10vmin;
@@ -109,8 +108,15 @@ a {
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: bold;
     border-radius: 4px;
+    width: 20vmin;
 }
 
 .missing-dog-prompt {
     text-align: center;
 }
+
+.dog-badge-container {
+    display: flex;
+    width: 100%;
+}
+

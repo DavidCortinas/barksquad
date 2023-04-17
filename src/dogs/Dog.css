@@ -1,10 +1,10 @@
 .dog-container {
   padding: 2px 16px;
-  display: grid;
   align-content: center;
+  margin-left: 5vmin;
 }
 
 .card-text {
-  margin: 1vmin 0;
+  margin: 2vmin 0;
 }
  

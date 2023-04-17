@@ -3,7 +3,8 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: bold;
     border-radius: 4px;
-    margin-left: 2vmin;
+    margin-left: 6vmin;
+    width: 30vmin;
 }
 
 .update-input {
