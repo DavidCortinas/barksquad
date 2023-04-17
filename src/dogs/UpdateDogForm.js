@@ -33,7 +33,7 @@ const UpdateDogForm = ({ onUpdatePressed, index, dog }) => {
                 className="open-edit" 
                 onClick={() => setShowModal(true)}
             >
-                Update {name}'s' Information
+                Update Information
             </button>
             <ReactModal
                 isOpen={showModal}
@@ -41,7 +41,7 @@ const UpdateDogForm = ({ onUpdatePressed, index, dog }) => {
                 style={modalStyle}
             >
                 <div className="modal-header">
-                    <h3 className="modal-title">Update {dog.name}'s information</h3>
+                    <h3 className="modal-title">Update Information:</h3>
                     <button className="modal-close-button" type='button' onClick={() => setShowModal(false)}>
                         <h3 className="modal-title">X</h3>
                     </button>
